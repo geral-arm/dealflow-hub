@@ -287,7 +287,7 @@ export const mockCarriers: Carrier[] = [
     routes: ['DXB-RUH', 'DXB-JED', 'DXB-KHI'], status: 'em_observacao',
     avgTransitDays: 4.5, onTimeRate: 79.0, incidentCount: 11, avgCostPerPallet: 38, currency: 'USD',
     paymentTerms: 'Net 15', totalShipments: 14, scoreGlobal: 72, scoreReliability: 74,
-    scoreCost: 78, scoreSpeed: 70, notes: 'Performance em queda, reavaliar em Q2', createdAt: '2024-04-01',
+    scoreCost: 78, scoreSpeed: 70, certifications: ['ISO 9001'], notes: 'Performance em queda, reavaliar em Q2', createdAt: '2024-04-01',
   },
 ];
 
