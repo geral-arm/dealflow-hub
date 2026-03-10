@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Globe,
   Handshake,
+  Store,
 } from "lucide-react";
 
 const navItems = [
