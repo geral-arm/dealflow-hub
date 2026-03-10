@@ -11,6 +11,7 @@ import Inventory from "./pages/Inventory";
 import Finance from "./pages/Finance";
 import Compliance from "./pages/Compliance";
 import Analytics from "./pages/Analytics";
+import Store from "./pages/Store";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/finance" element={<Finance />} />
           <Route path="/compliance" element={<Compliance />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/store" element={<Store />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

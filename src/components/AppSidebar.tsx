@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Globe,
   Handshake,
+  Store,
 } from "lucide-react";
 
 const navItems = [
@@ -24,6 +25,7 @@ const navItems = [
   { icon: DollarSign, label: "Financeiro", path: "/finance" },
   { icon: FileText, label: "Documentos", path: "/compliance" },
   { icon: BarChart3, label: "Analytics", path: "/analytics" },
+  { icon: Store, label: "Loja Online", path: "/store" },
 ];
 
 const bottomItems = [
