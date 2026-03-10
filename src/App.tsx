@@ -11,6 +11,7 @@ import Inventory from "./pages/Inventory";
 import Finance from "./pages/Finance";
 import Compliance from "./pages/Compliance";
 import Analytics from "./pages/Analytics";
+import Store from "./pages/Store";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
