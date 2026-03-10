@@ -20,7 +20,7 @@ interface Props {
   onDelete: (id: string) => void;
 }
 
-const emptyForm = {
+const emptyForm: { name: string; description: string; type: "percentage" | "fixed" | "bogo"; value: number; productIds: string[]; categoryIds: string[]; startDate: string; endDate: string; isActive: boolean; code: string; minQuantity: number | undefined } = {
   name: "", description: "", type: "percentage" as const, value: 0,
   productIds: [] as string[], categoryIds: [] as string[],
   startDate: "", endDate: "", isActive: true, code: "", minQuantity: undefined as number | undefined,
