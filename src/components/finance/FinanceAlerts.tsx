@@ -8,9 +8,9 @@ import { mockFinanceAlerts } from "@/data/finance-mock";
 import { AlertTriangle, AlertCircle, Info, Bell } from "lucide-react";
 
 const sevConfig = {
-  critical: { color: "destructive", icon: AlertTriangle },
-  warning: { color: "warning", icon: AlertCircle },
-  info: { color: "primary", icon: Info },
+  critical: { icon: AlertTriangle, text: "text-destructive", border: "border-destructive/30", bg: "bg-destructive/5", badge: "border-destructive/40 text-destructive" },
+  warning: { icon: AlertCircle, text: "text-warning", border: "border-warning/30", bg: "bg-warning/5", badge: "border-warning/40 text-warning" },
+  info: { icon: Info, text: "text-primary", border: "border-primary/30", bg: "bg-primary/5", badge: "border-primary/40 text-primary" },
 } as const;
 
 export function FinanceAlerts() {
@@ -19,13 +19,14 @@ export function FinanceAlerts() {
       <div className="grid gap-4 md:grid-cols-3">
         {(["critical", "warning", "info"] as const).map(s => {
           const count = mockFinanceAlerts.filter(a => a.severity === s).length;
-          const Icon = sevConfig[s].icon;
+          const cfg = sevConfig[s];
+          const Icon = cfg.icon;
           return (
             <Card key={s}>
               <CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-muted-foreground capitalize">{s}</CardTitle></CardHeader>
               <CardContent className="flex items-center justify-between">
-                <div className={`text-2xl font-bold text-${sevConfig[s].color}`}>{count}</div>
-                <Icon className={`h-6 w-6 text-${sevConfig[s].color}`} />
+                <div className={`text-2xl font-bold ${cfg.text}`}>{count}</div>
+                <Icon className={`h-6 w-6 ${cfg.text}`} />
               </CardContent>
             </Card>
           );
@@ -39,14 +40,14 @@ export function FinanceAlerts() {
             const cfg = sevConfig[a.severity];
             const Icon = cfg.icon;
             return (
-              <div key={a.id} className={`rounded-lg border bg-${cfg.color}/5 border-${cfg.color}/30 p-4`}>
+              <div key={a.id} className={`rounded-lg border p-4 ${cfg.bg} ${cfg.border}`}>
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3 flex-1">
-                    <Icon className={`h-5 w-5 text-${cfg.color} mt-0.5 shrink-0`} />
+                    <Icon className={`h-5 w-5 ${cfg.text} mt-0.5 shrink-0`} />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-sm font-semibold">{a.title}</span>
-                        <Badge variant="outline" className={`text-[10px] border-${cfg.color}/40 text-${cfg.color}`}>{a.type.replace("_", " ")}</Badge>
+                        <Badge variant="outline" className={`text-[10px] ${cfg.badge}`}>{a.type.replace("_", " ")}</Badge>
                       </div>
                       <p className="text-xs text-muted-foreground">{a.description}</p>
                     </div>
