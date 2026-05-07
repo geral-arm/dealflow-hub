@@ -50,7 +50,7 @@ export function FinanceScenarios() {
     return { cash7, cash30, liquidityImpact, risk };
   }, [baseline, clientDelay, supplierAccel, fxShock, stressTest]);
 
-  const riskColor = { low: "success", medium: "warning", high: "warning", critical: "destructive" }[result.risk];
+  const riskClass = { low: "border-success/40 text-success", medium: "border-warning/40 text-warning", high: "border-warning/40 text-warning", critical: "border-destructive/40 text-destructive" }[result.risk];
 
   return (
     <div className="space-y-6 mt-4">
@@ -96,7 +96,7 @@ export function FinanceScenarios() {
               <div className="text-xs text-muted-foreground">Variação vs baseline</div>
               <div className={`text-lg font-bold ${result.liquidityImpact < 0 ? "text-destructive" : "text-success"}`}>{result.liquidityImpact >= 0 ? "+" : ""}{fmt(result.liquidityImpact)}</div>
             </div>
-            <Badge variant="outline" className={`w-full justify-center py-2 border-${riskColor}/40 text-${riskColor}`}>Risco: {result.risk}</Badge>
+            <Badge variant="outline" className={`w-full justify-center py-2 ${riskClass}`}>Risco: {result.risk}</Badge>
           </CardContent>
         </Card>
       </div>
