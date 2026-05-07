@@ -1,19 +1,9 @@
-import { ModulePage } from "@/components/ModulePage";
-import { DollarSign } from "lucide-react";
+import { AppLayout } from "@/components/AppLayout";
+import { FinanceLayout } from "@/components/finance/FinanceLayout";
 
 const FinancePage = () => (
-  <ModulePage
-    title="Financeiro"
-    description="Controlo financeiro, faturação e margens"
-    icon={DollarSign}
-    features={[
-      "Controlo de crédito de clientes",
-      "Contas a receber e a pagar",
-      "Faturação automática",
-      "Reconciliação bancária",
-      "Cash flow em tempo real",
-      "Gestão multi-moeda",
-    ]}
-  />
+  <AppLayout>
+    <FinanceLayout />
+  </AppLayout>
 );
 export default FinancePage;
