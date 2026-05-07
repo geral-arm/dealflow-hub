@@ -22,8 +22,9 @@ export function FinanceCashPosition() {
 
   const fxAccounts = mockBankAccounts.filter(a => a.type === "fx");
 
-  const trafficLight = net > 0 ? "success" : net > -500000 ? "warning" : "destructive";
   const lightLabel = net > 0 ? "Posição saudável" : net > -500000 ? "Atenção — buffer reduzido" : "Crítico — risco de liquidez";
+  const lightClass = net > 0 ? "text-success border-success/40" : net > -500000 ? "text-warning border-warning/40" : "text-destructive border-destructive/40";
+  const lightTextClass = net > 0 ? "text-success" : net > -500000 ? "text-warning" : "text-destructive";
 
   return (
     <div className="space-y-6 mt-4">
@@ -46,8 +47,8 @@ export function FinanceCashPosition() {
         <Card>
           <CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-muted-foreground">Posição líquida</CardTitle></CardHeader>
           <CardContent>
-            <div className={`text-2xl font-bold text-${trafficLight}`}>{fmt(net)}</div>
-            <Badge variant="outline" className={`mt-1 border-${trafficLight}/40 text-${trafficLight}`}>{lightLabel}</Badge>
+            <div className={`text-2xl font-bold ${lightTextClass}`}>{fmt(net)}</div>
+            <Badge variant="outline" className={`mt-1 ${lightClass}`}>{lightLabel}</Badge>
           </CardContent>
         </Card>
         <Card>
