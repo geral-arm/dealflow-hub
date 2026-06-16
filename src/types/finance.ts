@@ -77,6 +77,9 @@ export type MonthlyTracker = {
   purchases: number;
   sales: number;
   netResult: number;
+  marginToReceive?: number; // margem total faturada/contratada esse mês
+  marginReceived?: number;  // margem efetivamente recebida em caixa
+  expenses?: number;        // FSE + salários + amortizações fixas
 };
 
 export type PnLYear = {

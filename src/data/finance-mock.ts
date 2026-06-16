@@ -5,71 +5,111 @@ import {
 } from "@/types/finance";
 
 // ============================================================
-// 1.1 — 8 contas reais. Liquidez total: 116.512 €
+// 1.1 — Posição de caixa REAL (Março 2026). Liquidez total: 116.512,33 €
 // ============================================================
 export const mockBankAccounts: BankAccount[] = [
-  { id: "b1", bank: "MillenniumBCP",   label: "DO Principal",      country: "PT",     currency: "EUR", type: "current", balance: 12000,  balanceEUR: 12000,  iban: "PT50 0033 ..." },
-  { id: "b2", bank: "MillenniumBCP",   label: "DO Secundária",     country: "PT",     currency: "EUR", type: "current", balance: 1000,   balanceEUR: 1000 },
-  { id: "b3", bank: "NovoBanco",       label: "DO Operações",      country: "PT",     currency: "EUR", type: "current", balance: 8500,   balanceEUR: 8500 },
-  { id: "b4", bank: "Bankinter PT",    label: "DO Tesouraria",     country: "PT",     currency: "EUR", type: "current", balance: 5200,   balanceEUR: 5200 },
-  { id: "b5", bank: "Bankinter ES",    label: "Cuenta operativa",  country: "ES",     currency: "EUR", type: "current", balance: 18000,  balanceEUR: 18000 },
-  { id: "b6", bank: "BBVA España",     label: "Cuenta confirming", country: "ES",     currency: "EUR", type: "current", balance: 56558,  balanceEUR: 56558 },
-  { id: "b7", bank: "Wise",            label: "Multi-currency EUR",country: "GLOBAL", currency: "EUR", type: "fx",      balance: 14548,  balanceEUR: 14548 },
-  { id: "b8", bank: "Revolut",         label: "Business EUR",      country: "GLOBAL", currency: "EUR", type: "fx",      balance: 706,    balanceEUR: 706 },
+  { id: "b1", bank: "Millennium BCP",  label: "Conta à ordem",            country: "PT",     currency: "EUR", type: "current", balance: 47138.19, balanceEUR: 47138.19 },
+  { id: "b2", bank: "Novo Banco",      label: "Conta à ordem",            country: "PT",     currency: "EUR", type: "current", balance:  2194.01, balanceEUR:  2194.01 },
+  { id: "b3", bank: "Novo Banco",      label: "Poupança",                 country: "PT",     currency: "EUR", type: "current", balance: 23000.00, balanceEUR: 23000.00 },
+  { id: "b4", bank: "Wise",            label: "Multi-currency EUR",       country: "GLOBAL", currency: "EUR", type: "fx",      balance: 14548.34, balanceEUR: 14548.34 },
+  { id: "b5", bank: "Revolut Business",label: "Conta EUR",                country: "GLOBAL", currency: "EUR", type: "fx",      balance:   706.45, balanceEUR:   706.45 },
+  { id: "b6", bank: "Bankinter PT",    label: "Conta à ordem",            country: "PT",     currency: "EUR", type: "current", balance: 24853.47, balanceEUR: 24853.47 },
+  { id: "b7", bank: "BBVA España",     label: "Cuenta operativa",         country: "ES",     currency: "EUR", type: "current", balance:   790.00, balanceEUR:   790.00 },
+  { id: "b8", bank: "Bankinter España",label: "Cuenta operativa",         country: "ES",     currency: "EUR", type: "current", balance:  3281.87, balanceEUR:  3281.87 },
 ];
 
 // ============================================================
-// 1.2 — Linhas de crédito. Dívida total: 2.323.837 €
+// 1.2 — Obrigações bancárias REAIS. Dívida total: 2.323.837,22 €
 // ============================================================
 export const mockCreditLines: CreditLine[] = [
-  { id: "cl1", bank: "MillenniumBCP",  product: "Confirming", contracted: 1500000, used: 1500000, nextCallDate: "+4", notes: "100% utilização — call-in iminente" },
-  { id: "cl2", bank: "Bankinter ES",   product: "Confirming", contracted: 600000,  used: 600000,  nextCallDate: "+9", notes: "~100% utilização" },
-  { id: "cl3", bank: "NovoBanco",      product: "FEI",        contracted: 250000,  used: 223837,  nextCallDate: "+12", notes: "Amortização mensal" },
-  { id: "cl4", bank: "BBVA España",    product: "Hot Money",  contracted: 200000,  used: 0,       notes: "Reserva — disponível" },
-  { id: "cl5", bank: "Bankinter PT",   product: "Overdraft",  contracted: 50000,   used: 0,       notes: "Buffer operacional" },
+  // Millennium BCP — a pagar: 1.500.000 € (apenas confirming em dívida; empréstimos amortizados)
+  { id: "cl1",  bank: "Millennium BCP", product: "Confirming", contracted: 1500000, used: 1500000, nextCallDate: "+4", notes: "Conta 100% utilizada — call-in iminente" },
+  { id: "cl2",  bank: "Millennium BCP", product: "Hot Money",  contracted:  411000, used:       0, notes: "Empréstimo 420155511 — amortizado, linha disponível" },
+  { id: "cl3",  bank: "Millennium BCP", product: "Hot Money",  contracted:  500000, used:       0, notes: "Empréstimo 420077911 — amortizado, linha disponível" },
+  // Novo Banco — a pagar: 273.850,51 €
+  { id: "cl4",  bank: "Novo Banco",     product: "FEI",        contracted:  100000, used: 86112.97, notes: "FEI 1 (0770134066) — amortização em curso" },
+  { id: "cl5",  bank: "Novo Banco",     product: "FEI",        contracted:  100000, used: 93860.55, notes: "FEI 2 (0770136421) — amortização em curso" },
+  { id: "cl6",  bank: "Novo Banco",     product: "Hot Money",  contracted:  150000, used: 93876.99, notes: "Linha Extra Amortizável" },
+  // Bankinter Portugal — a pagar: 549.986,71 €
+  { id: "cl7",  bank: "Bankinter PT",   product: "Overdraft",  contracted:   50000, used:    50000, notes: "Conta caucionada — totalmente utilizada" },
+  { id: "cl8",  bank: "Bankinter PT",   product: "Hot Money",  contracted:  150000, used:   150000, notes: "Apoio a Impostos — totalmente utilizado" },
+  { id: "cl9",  bank: "Bankinter PT",   product: "Confirming", contracted:  100000, used: 99986.71, notes: "Confirming Bankinter PT — ~100% utilização" },
+  { id: "cl10", bank: "Bankinter PT",   product: "FEI",        contracted:  250000, used:   250000, notes: "Financiamento à Exportação — totalmente utilizado" },
 ];
 
 export const FINANCE_TOTALS = {
-  liquidity: 116512,
-  debt: 2323837,
-  purchasingPower: 253,   // disponível para compras (crítico)
+  liquidity: 116512.33,
+  debt: 2323837.22,
+  netPosition: -2207324.89,           // liquidez − dívida
+  purchasingPower: 253.29,            // disponível REAL para compras (crítico)
   activeAccounts: 8,
   activeBanks: 7,
-  currentGrossMargin: 5.02, // %
+  currentGrossMargin: 5.02, // % YTD
+  currentNetMargin: 3.52,   // % YTD
   targetGrossMargin: 5.0,
 };
 
-// ============================================================
-// 1.3 — Tracker mensal 2026 (Compras / Vendas / Resultado)
-// ============================================================
-export const mockMonthlyTracker: MonthlyTracker[] = [
-  { month: "Jan", year: 2026, purchases: 412000, sales: 438500, netResult:  4280 },
-  { month: "Fev", year: 2026, purchases: 385000, sales: 401200, netResult:  2150 },
-  { month: "Mar", year: 2026, purchases: 456000, sales: 482700, netResult:  5380 },
-  { month: "Abr", year: 2026, purchases: 398000, sales: 415900, netResult:  1820 },
-  { month: "Mai", year: 2026, purchases: 425000, sales: 449300, netResult:  3640 },
-  { month: "Jun", year: 2026, purchases: 470000, sales: 498100, netResult:  4910 },
-  { month: "Jul", year: 2026, purchases: 0, sales: 0, netResult: 0 },
-  { month: "Ago", year: 2026, purchases: 0, sales: 0, netResult: 0 },
-  { month: "Set", year: 2026, purchases: 0, sales: 0, netResult: 0 },
-  { month: "Out", year: 2026, purchases: 0, sales: 0, netResult: 0 },
-  { month: "Nov", year: 2026, purchases: 0, sales: 0, netResult: 0 },
-  { month: "Dez", year: 2026, purchases: 0, sales: 0, netResult: 0 },
+// Detalhe "a pagar" por banco (visão CEO: "Quanto devo a cada um?")
+export const DEBT_BY_BANK = [
+  { bank: "Millennium BCP", amount: 1500000.00, share: 64.55 },
+  { bank: "Bankinter PT",   amount:  549986.71, share: 23.67 },
+  { bank: "Novo Banco",     amount:  273850.51, share: 11.78 },
 ];
 
-// 1.4 — Objetivo 2026
+// ============================================================
+// 1.3 — Tracker mensal REAL 2026 (sheet RESUMO)
+// Despesa fixa estimada: 69.167 €/mês
+// ============================================================
+const FIXED_EXPENSES_MONTHLY = 69167;
+
+export const mockMonthlyTracker: MonthlyTracker[] = [
+  { month: "Jan", year: 2026, purchases: 332822.92, sales: 369287.22, marginToReceive: 36464.30, marginReceived: 28991.42, expenses: FIXED_EXPENSES_MONTHLY, netResult:  11363.89 },
+  { month: "Fev", year: 2026, purchases: 548175.80, sales: 565529.72, marginToReceive: 17353.92, marginReceived:  8762.52, expenses: FIXED_EXPENSES_MONTHLY, netResult:  -2882.00 },
+  { month: "Mar", year: 2026, purchases: 189189.00, sales: 191961.00, marginToReceive:  2772.00, marginReceived:  1940.40, expenses: FIXED_EXPENSES_MONTHLY, netResult:    182.91 },
+  { month: "Abr", year: 2026, purchases: 0, sales: 0, marginToReceive: 0, marginReceived: 0, expenses: FIXED_EXPENSES_MONTHLY, netResult: 0 },
+  { month: "Mai", year: 2026, purchases: 0, sales: 0, marginToReceive: 0, marginReceived: 0, expenses: FIXED_EXPENSES_MONTHLY, netResult: 0 },
+  { month: "Jun", year: 2026, purchases: 0, sales: 0, marginToReceive: 0, marginReceived: 0, expenses: FIXED_EXPENSES_MONTHLY, netResult: 0 },
+  { month: "Jul", year: 2026, purchases: 0, sales: 0, marginToReceive: 0, marginReceived: 0, expenses: FIXED_EXPENSES_MONTHLY, netResult: 0 },
+  { month: "Ago", year: 2026, purchases: 0, sales: 0, marginToReceive: 0, marginReceived: 0, expenses: FIXED_EXPENSES_MONTHLY, netResult: 0 },
+  { month: "Set", year: 2026, purchases: 0, sales: 0, marginToReceive: 0, marginReceived: 0, expenses: FIXED_EXPENSES_MONTHLY, netResult: 0 },
+  { month: "Out", year: 2026, purchases: 0, sales: 0, marginToReceive: 0, marginReceived: 0, expenses: FIXED_EXPENSES_MONTHLY, netResult: 0 },
+  { month: "Nov", year: 2026, purchases: 0, sales: 0, marginToReceive: 0, marginReceived: 0, expenses: FIXED_EXPENSES_MONTHLY, netResult: 0 },
+  { month: "Dez", year: 2026, purchases: 0, sales: 0, marginToReceive: 0, marginReceived: 0, expenses: FIXED_EXPENSES_MONTHLY, netResult: 0 },
+];
+
+// Totais YTD reais (3 meses)
+export const YTD_2026 = {
+  purchases:        1070187.72,
+  sales:            1126777.94,
+  marginToReceive:    56590.22,
+  marginReceived:     39694.34,
+  netResult:           8664.80,
+  avgPurchases:      356729.24,
+  avgSales:          375592.65,
+  avgMargin:          18863.41,
+  grossMarginPct:        5.02,
+  netMarginPct:          3.52,
+};
+
+// 1.4 — Objetivo anual REAL 2026
 export const TARGET_2026 = {
-  salesGoal: 6000000,
+  marginGoal: 1200000,                        // objetivo ilíquido 2026
+  ytdMargin: 56590.22,                        // realizado YTD
+  missingMargin: 1143409.78,                  // falta para objetivo
+  progressPct: 4.72,                          // % concluído
+  // mantidos por compat — derivados da meta de margem (5% target)
+  salesGoal: 24000000,
   netResultGoal: 90000,
 };
 
 // ============================================================
-// 1.7 — Cobranças, devedores em disputa e congelados em tribunal
+// 1.5 — Margem histórica por recuperar — 132.986,31 €
 // ============================================================
 export const historicMarginToRecover: HistoricMargin[] = [
-  { year: 2024, amount: 55287 },
-  { year: 2025, amount: 77698 },
+  { year: 2024, amount: 55287.62 },
+  { year: 2025, amount: 77698.69 },
 ];
+export const HISTORIC_MARGIN_TOTAL = 132986.31;
 
 export const mockDisputedDebtors: DisputedDebtor[] = [
   { id: "dd1", debtor: "MFI",              group: "Grupo FIA",    amount: 48200, origin: "Faturas 2024 não pagas",   withPenalty: true,  status: "Em disputa — advogado contactado" },
@@ -100,11 +140,13 @@ export const mockExpenses: ExpenseLine[] = [
   { id: "e10", category: "Gerais",   name: "Renting Informática",       monthly: 144.43,  jan: 144.43, feb: 144.43, mar: 144.43 },
   { id: "e11", category: "Veículos", name: "Via Verde",                 monthly: 178.66,  jan: 178.66, feb: 178.66, mar: 178.66 },
   { id: "e12", category: "Viagens",  name: "Viagens (BCN / DXB)",       monthly: 339,     jan: 339, feb: 339, mar: 339 },
+  // Balanceamento até ao real fixo mensal (69.167 €) — encargos financeiros + amortizações + outras FSE
+  { id: "e13", category: "Gerais",   name: "Encargos financeiros + Amortizações + Outras FSE", monthly: 51710.40, jan: 51710.40, feb: 51710.40, mar: 51710.40 },
 ];
 
 export const EXPENSE_TOTALS = {
-  fixedMonthly: 27202,
-  fixedAnnualEstimate: 69167,
+  fixedMonthly: 69167,
+  fixedAnnualEstimate: 830004,
 };
 
 // ============================================================
