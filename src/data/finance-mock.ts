@@ -140,11 +140,13 @@ export const mockExpenses: ExpenseLine[] = [
   { id: "e10", category: "Gerais",   name: "Renting Informática",       monthly: 144.43,  jan: 144.43, feb: 144.43, mar: 144.43 },
   { id: "e11", category: "Veículos", name: "Via Verde",                 monthly: 178.66,  jan: 178.66, feb: 178.66, mar: 178.66 },
   { id: "e12", category: "Viagens",  name: "Viagens (BCN / DXB)",       monthly: 339,     jan: 339, feb: 339, mar: 339 },
+  // Balanceamento até ao real fixo mensal (69.167 €) — encargos financeiros + amortizações + outras FSE
+  { id: "e13", category: "Gerais",   name: "Encargos financeiros + Amortizações + Outras FSE", monthly: 51710.40, jan: 51710.40, feb: 51710.40, mar: 51710.40 },
 ];
 
 export const EXPENSE_TOTALS = {
-  fixedMonthly: 27202,
-  fixedAnnualEstimate: 69167,
+  fixedMonthly: 69167,
+  fixedAnnualEstimate: 830004,
 };
 
 // ============================================================
