@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { mockMonthlyTracker, TARGET_2026, FINANCE_TOTALS } from "@/data/finance-mock";
+import { mockMonthlyTracker, TARGET_2026, FINANCE_TOTALS, YTD_2026 } from "@/data/finance-mock";
 import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { Target } from "lucide-react";
 
@@ -14,9 +14,11 @@ export function FinancePnL() {
   const net = mockMonthlyTracker.reduce((s, m) => s + m.netResult, 0);
   const grossMargin = sales > 0 ? ((sales - purchases) / sales) * 100 : 0;
 
-  const progressSales = (sales / TARGET_2026.salesGoal) * 100;
-  const progressNet = (net / TARGET_2026.netResultGoal) * 100;
-  const missingSales = Math.max(0, TARGET_2026.salesGoal - sales);
+  const marginYtd = YTD_2026.marginToReceive;
+  const marginReceived = YTD_2026.marginReceived;
+  const progressMargin = (marginYtd / TARGET_2026.marginGoal) * 100;
+  const missingMargin = Math.max(0, TARGET_2026.marginGoal - marginYtd);
+  const progressReceived = (marginReceived / TARGET_2026.marginGoal) * 100;
 
   return (
     <div className="space-y-6 mt-4">
@@ -28,22 +30,23 @@ export function FinancePnL() {
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="text-sm flex items-center gap-2"><Target className="h-4 w-4" />Objetivo 2026</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-sm flex items-center gap-2"><Target className="h-4 w-4" />Objetivo de Margem 2026 — {fmt(TARGET_2026.marginGoal)}</CardTitle></CardHeader>
         <CardContent className="space-y-5">
           <div>
             <div className="flex justify-between text-xs mb-1">
-              <span className="text-muted-foreground">Vendas — {fmt(sales)} / {fmt(TARGET_2026.salesGoal)}</span>
-              <Badge variant="outline">{progressSales.toFixed(1)}%</Badge>
+              <span className="text-muted-foreground">Margem total a receber — {fmt(marginYtd)} / {fmt(TARGET_2026.marginGoal)}</span>
+              <Badge variant="outline">{progressMargin.toFixed(2)}%</Badge>
             </div>
-            <Progress value={Math.min(100, progressSales)} className="h-2" />
-            <p className="text-[11px] text-muted-foreground mt-1">Falta {fmt(missingSales)} para o objetivo anual</p>
+            <Progress value={Math.min(100, progressMargin)} className="h-2" />
+            <p className="text-[11px] text-muted-foreground mt-1">Falta {fmt(missingMargin)} para o objetivo ilíquido anual</p>
           </div>
           <div>
             <div className="flex justify-between text-xs mb-1">
-              <span className="text-muted-foreground">Resultado líquido — {fmt(net)} / {fmt(TARGET_2026.netResultGoal)}</span>
-              <Badge variant="outline">{progressNet.toFixed(1)}%</Badge>
+              <span className="text-muted-foreground">Margem efetivamente recebida — {fmt(marginReceived)} / {fmt(TARGET_2026.marginGoal)}</span>
+              <Badge variant="outline">{progressReceived.toFixed(2)}%</Badge>
             </div>
-            <Progress value={Math.min(100, Math.max(0, progressNet))} className="h-2" />
+            <Progress value={Math.min(100, Math.max(0, progressReceived))} className="h-2" />
+            <p className="text-[11px] text-muted-foreground mt-1">Resultado líquido YTD: {fmt(net)}</p>
           </div>
         </CardContent>
       </Card>
@@ -77,22 +80,22 @@ export function FinancePnL() {
                 <TableHead>Mês</TableHead>
                 <TableHead className="text-right">Compras</TableHead>
                 <TableHead className="text-right">Vendas</TableHead>
-                <TableHead className="text-right">Margem €</TableHead>
-                <TableHead className="text-right">Margem %</TableHead>
+                <TableHead className="text-right">Margem a Receber</TableHead>
+                <TableHead className="text-right">Margem Recebida</TableHead>
+                <TableHead className="text-right">Despesas</TableHead>
                 <TableHead className="text-right">Resultado</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {mockMonthlyTracker.map(m => {
-                const margin = m.sales - m.purchases;
-                const marginPct = m.sales > 0 ? (margin / m.sales) * 100 : 0;
                 return (
                   <TableRow key={m.month} className={m.sales === 0 ? "opacity-40" : ""}>
                     <TableCell className="font-medium">{m.month} {m.year}</TableCell>
                     <TableCell className="text-right">{fmt(m.purchases)}</TableCell>
                     <TableCell className="text-right">{fmt(m.sales)}</TableCell>
-                    <TableCell className="text-right">{fmt(margin)}</TableCell>
-                    <TableCell className="text-right">{marginPct.toFixed(2)}%</TableCell>
+                    <TableCell className="text-right">{fmt(m.marginToReceive ?? 0)}</TableCell>
+                    <TableCell className="text-right text-success">{fmt(m.marginReceived ?? 0)}</TableCell>
+                    <TableCell className="text-right text-muted-foreground">{fmt(m.expenses ?? 0)}</TableCell>
                     <TableCell className={`text-right font-medium ${m.netResult >= 0 ? "text-success" : "text-destructive"}`}>{fmt(m.netResult)}</TableCell>
                   </TableRow>
                 );
