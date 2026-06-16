@@ -64,12 +64,13 @@ export function FinanceAlerts() {
         <CardHeader><CardTitle className="text-sm">Regras de automação</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           {[
-            { id: "r1", label: "Cash balance < €100.000 → notificar CFO", on: true, threshold: 100000, unit: "€" },
-            { id: "r2", label: "Recebível em atraso > 30 dias → escalação automática", on: true, threshold: 30, unit: "dias" },
-            { id: "r3", label: "Margem de deal < 2% → flag para revisão", on: true, threshold: 2, unit: "%" },
-            { id: "r4", label: "Best Before Date < 90 dias → alerta inventário", on: true, threshold: 90, unit: "dias" },
-            { id: "r5", label: "Confirming call-in < 5 dias → preparar pagamento", on: true, threshold: 5, unit: "dias" },
-            { id: "r6", label: "Concentração bancária > 35% → rebalancear", on: false, threshold: 35, unit: "%" },
+            { id: "r1", label: "Saldo de caixa < 100.000 € → notificar CEO",            on: true,  threshold: 100000, unit: "€" },
+            { id: "r2", label: "Recebível / Deal Unpaid > 30 dias → escalação",         on: true,  threshold: 30,     unit: "dias" },
+            { id: "r3", label: "Margem de deal < 2% → flag para revisão",                on: true,  threshold: 2,      unit: "%" },
+            { id: "r4", label: "Best Before Date (BBD) < 90 dias → alerta inventário",   on: true,  threshold: 90,     unit: "dias" },
+            { id: "r5", label: "Confirming call-in < 5 dias → preparar pagamento",       on: true,  threshold: 5,      unit: "dias" },
+            { id: "r6", label: "Margem a receber > 60 dias → revisão comercial",         on: true,  threshold: 60,     unit: "dias" },
+            { id: "r7", label: "Concentração bancária > 50% → rebalancear",              on: true,  threshold: 50,     unit: "%" },
           ].map(r => (
             <div key={r.id} className="flex items-center justify-between rounded-lg border p-3">
               <Label className="text-sm flex-1">{r.label}</Label>

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { mockCashFlow, mockBankAccounts } from "@/data/finance-mock";
+import { mockCashFlow, FINANCE_TOTALS } from "@/data/finance-mock";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useState } from "react";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceLine } from "recharts";
@@ -8,7 +8,7 @@ import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianG
 const fmt = (n: number) => new Intl.NumberFormat("pt-PT", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
 function buildForecast(days: number) {
-  const startCash = mockBankAccounts.reduce((s, a) => s + a.balanceEUR, 0);
+  const startCash = FINANCE_TOTALS.liquidity;
   const today = new Date();
   const points: { date: string; balance: number; inflow: number; outflow: number }[] = [];
   let running = startCash;
@@ -55,10 +55,16 @@ export function FinanceCashFlow() {
           <CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-muted-foreground">Mínimo de cash projetado</CardTitle></CardHeader>
           <CardContent>
             <div className={`text-2xl font-bold ${minBalance < 0 ? "text-destructive" : "text-foreground"}`}>{fmt(minBalance)}</div>
-            <div className="text-xs text-muted-foreground mt-1">{minBalance < 0 ? "⚠ Possível cash crunch" : "Buffer adequado"}</div>
+            <div className="text-xs text-muted-foreground mt-1">{minBalance < 0 ? "⚠ Cash crunch — modelo capital-intensivo" : "Buffer adequado"}</div>
           </CardContent>
         </Card>
       </div>
+
+      <Card className="border-warning/40 bg-warning/5">
+        <CardContent className="pt-4 text-xs">
+          ⚠ <strong>Disponível para compras: {fmt(FINANCE_TOTALS.purchasingPower)}.</strong> Qualquer nova encomenda a fornecedor consome diretamente este buffer — cruzar projeção com saídas a {horizon} dias.
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader><CardTitle className="text-sm">Cash Flow Waterfall — {horizon} dias</CardTitle></CardHeader>

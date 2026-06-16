@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useState, useMemo } from "react";
-import { mockBankAccounts, mockCashFlow } from "@/data/finance-mock";
+import { mockCashFlow, FINANCE_TOTALS } from "@/data/finance-mock";
 import { AlertTriangle, Zap } from "lucide-react";
 
 const fmt = (n: number) => new Intl.NumberFormat("pt-PT", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
@@ -16,7 +16,7 @@ export function FinanceScenarios() {
   const [fxShock, setFxShock] = useState(0);
   const [stressTest, setStressTest] = useState(false);
 
-  const baseline = useMemo(() => mockBankAccounts.reduce((s, a) => s + a.balanceEUR, 0), []);
+  const baseline = useMemo(() => FINANCE_TOTALS.liquidity, []);
 
   const result = useMemo(() => {
     const today = new Date();
@@ -58,6 +58,10 @@ export function FinanceScenarios() {
         <Card className="lg:col-span-2">
           <CardHeader><CardTitle className="text-sm flex items-center gap-2"><Zap className="h-4 w-4" />Parâmetros do cenário</CardTitle></CardHeader>
           <CardContent className="space-y-6">
+            <div className="rounded-lg border bg-muted/30 p-3 text-xs">
+              <strong>Baseline real:</strong> Liquidez {fmt(FINANCE_TOTALS.liquidity)} · Disponível para compras {fmt(FINANCE_TOTALS.purchasingPower)}.
+              Cenários-tipo: <em>"Millennium call do confirming"</em>, <em>"PROAMFAMILY atrasa 30 dias"</em>.
+            </div>
             <div>
               <div className="flex justify-between mb-2"><Label className="text-xs">Atraso de pagamento de clientes</Label><span className="text-xs font-mono">+{clientDelay} dias</span></div>
               <Slider value={[clientDelay]} onValueChange={(v) => setClientDelay(v[0])} max={60} step={5} disabled={stressTest} />
@@ -107,19 +111,19 @@ export function FinanceScenarios() {
           {result.cash7 < 0 && (
             <div className="rounded-lg bg-destructive/10 border border-destructive/30 p-3 flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-destructive mt-0.5" />
-              <div className="text-xs"><strong>Acionar linha de confirming BBVA</strong> — cash projetado a 7 dias é negativo. Mobilizar até €145k disponíveis.</div>
+              <div className="text-xs"><strong>Acionar Hot Money BBVA España</strong> — cash projetado a 7 dias é negativo. Linha disponível: 200.000 €.</div>
             </div>
           )}
           {result.cash30 < 0 && (
             <div className="rounded-lg bg-warning/10 border border-warning/30 p-3 flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-warning mt-0.5" />
-              <div className="text-xs"><strong>Renegociar prazos com fornecedores</strong> — Coca-Cola Iberia e Nestlé concentram 40% das saídas no horizonte.</div>
+              <div className="text-xs"><strong>Renegociar prazos com ALPHA SOLUTIONS e BEBIDAS INTERNATIONAL</strong> — concentram a maior parte das saídas no horizonte.</div>
             </div>
           )}
           {clientDelay >= 15 && (
             <div className="rounded-lg bg-warning/10 border border-warning/30 p-3 flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-warning mt-0.5" />
-              <div className="text-xs"><strong>Antecipar follow-up comercial</strong> com Carrefour, Tesco e Mercadona para minimizar o impacto.</div>
+              <div className="text-xs"><strong>Antecipar follow-up comercial</strong> com PROAMFAMILY, BODEGA EXPRESS e UNIVERSAL COMPRAS para minimizar o impacto.</div>
             </div>
           )}
           {result.risk === "low" && !stressTest && clientDelay === 0 && supplierAccel === 0 && fxShock === 0 && (
