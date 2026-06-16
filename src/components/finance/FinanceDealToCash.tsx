@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { mockFinanceDeals } from "@/data/finance-mock";
+import { mockFinanceDeals, UNPAID_2026_TOTAL } from "@/data/finance-mock";
 import { Progress } from "@/components/ui/progress";
 
 const fmt = (n: number) => new Intl.NumberFormat("pt-PT", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
@@ -9,9 +9,9 @@ const fmt = (n: number) => new Intl.NumberFormat("pt-PT", { style: "currency", c
 const statusColors: Record<string, string> = {
   perspective: "bg-muted text-muted-foreground",
   ongoing: "bg-primary/15 text-primary",
-  concluded: "bg-warning/15 text-warning",
-  paid: "bg-success/15 text-success",
+  concluded: "bg-success/15 text-success",
   unpaid: "bg-destructive/15 text-destructive",
+  canceled: "bg-muted text-muted-foreground",
 };
 
 function daysBetween(a: string, b: string) {
@@ -31,7 +31,7 @@ export function FinanceDealToCash() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card><CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-muted-foreground">Volume ativo</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{fmt(totalSell)}</div><div className="text-xs text-muted-foreground mt-1">{mockFinanceDeals.length} deals</div></CardContent></Card>
         <Card><CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-muted-foreground">Margem total</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold text-success">{fmt(totalMargin)}</div><div className="text-xs text-muted-foreground mt-1">{((totalMargin / totalSell) * 100).toFixed(1)}% médio</div></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-muted-foreground">Cash bloqueado</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold text-destructive">{fmt(blockingCash)}</div><div className="text-xs text-muted-foreground mt-1">{blocking.length} deals em atraso</div></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-muted-foreground">Cash bloqueado (Unpaid)</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold text-destructive">{fmt(blockingCash)}</div><div className="text-xs text-muted-foreground mt-1">{blocking.length} aqui · pipeline 2026: {UNPAID_2026_TOTAL} unpaid</div></CardContent></Card>
         <Card><CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-muted-foreground">Pipeline</CardTitle></CardHeader><CardContent>
           <div className="space-y-1 text-xs">
             {Object.entries(counts).map(([s, c]) => (
@@ -96,7 +96,7 @@ export function FinanceDealToCash() {
                     <TableCell><Badge className={statusColors[d.status]}>{d.status}</Badge></TableCell>
                     <TableCell className="text-right text-sm">{fmt(d.sellPrice)}</TableCell>
                     <TableCell className="text-right text-sm">{fmt(margin)}</TableCell>
-                    <TableCell className={`text-right text-sm font-medium ${marginPct < 12 ? "text-warning" : "text-success"}`}>{marginPct.toFixed(1)}%</TableCell>
+                    <TableCell className={`text-right text-sm font-medium ${marginPct < 2 ? "text-destructive" : marginPct < 5 ? "text-warning" : "text-success"}`}>{marginPct.toFixed(1)}%</TableCell>
                     <TableCell className="text-right text-sm">{dtc}d</TableCell>
                   </TableRow>
                 );

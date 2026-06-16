@@ -6,16 +6,24 @@ import { FinanceDealToCash } from "./FinanceDealToCash";
 import { FinanceKpis } from "./FinanceKpis";
 import { FinanceScenarios } from "./FinanceScenarios";
 import { FinanceAlerts } from "./FinanceAlerts";
+import { FinancePnL } from "./FinancePnL";
+import { FinanceCollections } from "./FinanceCollections";
+import { FinanceExpenses } from "./FinanceExpenses";
+import { FinanceHistory } from "./FinanceHistory";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 
 const tabs = [
-  { value: "cash", label: "Cash Position" },
-  { value: "flow", label: "Cash Flow" },
-  { value: "deals", label: "Deal-to-Cash" },
-  { value: "kpis", label: "KPIs & Tendências" },
-  { value: "scenarios", label: "Cenários" },
-  { value: "alerts", label: "Alertas" },
+  { value: "cash",        label: "Posição de Caixa" },
+  { value: "flow",        label: "Fluxo de Caixa" },
+  { value: "deals",       label: "Deal-to-Cash" },
+  { value: "kpis",        label: "KPIs & Tendências" },
+  { value: "pnl",         label: "Resultados (P&L)" },
+  { value: "collections", label: "Cobranças & Litígios" },
+  { value: "expenses",    label: "Despesas (FSE)" },
+  { value: "scenarios",   label: "Cenários" },
+  { value: "alerts",      label: "Alertas" },
+  { value: "history",     label: "Histórico (DRE)" },
 ];
 
 export function FinanceLayout() {
@@ -48,8 +56,12 @@ export function FinanceLayout() {
         <TabsContent value="flow"><FinanceCashFlow /></TabsContent>
         <TabsContent value="deals"><FinanceDealToCash /></TabsContent>
         <TabsContent value="kpis"><FinanceKpis /></TabsContent>
+        <TabsContent value="pnl"><FinancePnL /></TabsContent>
+        <TabsContent value="collections"><FinanceCollections /></TabsContent>
+        <TabsContent value="expenses"><FinanceExpenses /></TabsContent>
         <TabsContent value="scenarios"><FinanceScenarios /></TabsContent>
         <TabsContent value="alerts"><FinanceAlerts /></TabsContent>
+        <TabsContent value="history"><FinanceHistory /></TabsContent>
       </Tabs>
     </div>
   );
